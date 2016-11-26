@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_bar__pie_"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.shirin.moneymoney_capstoneproject.Bar_Pie_Activity">
+
+    <TextView
+        android:text="Transaction Summery"
+        android:textSize="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:id="@+id/textViewTransaction"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:id="@+id/textViewTotal"
+        android:layout_below="@+id/textViewTransaction"
+        android:layout_alignEnd="@+id/textViewTransaction"
+        />
+
+    <Button
+        android:id="@+id/generateBarChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Generate Bar Chart --->"
+        style="@android:style/Widget.Button"
+        android:layout_below="@+id/textViewTotal"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="84dp" />
+
+    <Button
+        android:id="@+id/generatePieChart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Generate Pie Chart --->"
+        style="@android:style/Widget.Button"
+        android:layout_below="@+id/generateBarChart"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="67dp" />
+
+</RelativeLayout>
