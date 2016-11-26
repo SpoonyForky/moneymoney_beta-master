@@ -33,7 +33,7 @@
         <activity android:name=".AddTransaction">
 
         </activity>
-        <activity android:name=".BarGraphActivity">
+        <activity android:name=".BarGraphActivity2">
 
         </activity>
         <activity android:name=".PieActivity"></activity>

@@ -2,25 +2,11 @@ package com.example.shirin.moneymoney_capstoneproject;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class Bar_Pie_Activity extends AppCompatActivity implements View.OnClickListener {
     Button bar, pie;
@@ -52,7 +38,7 @@ public class Bar_Pie_Activity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
         if (v == bar) {
-            startActivity(new Intent(getBaseContext(), BarGraphActivity.class));
+            startActivity(new Intent(getBaseContext(), BarGraphActivity2.class));
         }
         if (v == pie) {
             startActivity(new Intent(getBaseContext(), PieActivity.class));
