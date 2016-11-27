@@ -10,6 +10,7 @@ import android.util.Log;
 import android.widget.LinearLayout;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.Entry;
@@ -40,6 +41,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static android.graphics.Color.BLUE;
+import static android.graphics.Color.GREEN;
+import static android.graphics.Color.RED;
 
 public class BarGraphActivity2 extends AppCompatActivity {
 
@@ -72,6 +77,53 @@ public class BarGraphActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_bar_graph);
         //id the chart layout
         newBarChart = (BarChart) findViewById(R.id.chart_Container);
+        /*
+        StringBuffer sb = new StringBuffer();
+
+         BufferedReader br = null;
+         try {
+         br = new BufferedReader(new InputStreamReader(getAssets().open("expenses.json")));
+         String temp;
+         while ((temp = br.readLine()) != null) {
+         sb.append(temp);
+         }
+         br.close();
+         } catch (IOException e) {
+         e.printStackTrace();
+         }
+         try {
+         JSONArray result = new JSONArray(sb.toString());
+         JSONObject jsonObject = null;
+         //loop through the array and break the JSONObject into String
+         for (int i = 0; i < result.length(); i++) {
+         jsonObject = result.getJSONObject(i);
+         amount = jsonObject.getString(TAG_AMOUNT);
+         desc = jsonObject.getString(TAG_DESC);
+         type = jsonObject.getString(TAG_TYPE);
+         //getting date as string from database
+         date = jsonObject.getString(TAG_DATE);
+         //System.out.println(amount + date);
+         SimpleDateFormat readFormat = new SimpleDateFormat("EEEE, MMMM dd, yyyy hh:mm a");
+         //check it date string for null or empty string or else it will give Unparseable date: "" (at offset 0) error
+         if (!date.equalsIgnoreCase("")) {
+         try {
+         Date dt = readFormat.parse(date);  //parse the date string in the read format
+         Log.d("Date: ", date);
+         double amt = Double.valueOf(amount.replace(",", ""));
+         //System.out.println(amt);
+         Log.d("Amount: ", String.valueOf(amt));
+
+         } catch (ParseException e) {
+         e.printStackTrace();
+         }
+         } else {
+         return;
+         }
+         }
+         } catch (JSONException e) {
+         e.printStackTrace();
+         }
+        */
 
         new ChartTask().execute();
     }
@@ -86,17 +138,17 @@ public class BarGraphActivity2 extends AppCompatActivity {
 
         protected void onPreExecute() {
             super.onPreExecute();
-            pDialog = new ProgressDialog(BarGraphActivity2.this);
-            pDialog.setMessage("Loading data. Please wait...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(false);
-            pDialog.show();
+            //    pDialog = new ProgressDialog(BarGraphActivity2.this);
+            //  pDialog.setMessage("Loading data. Please wait...");
+            //  pDialog.setIndeterminate(false);
+            // pDialog.setCancelable(false);
+            //   pDialog.show();
             setupChart();
         }
 
         @Override
         protected String doInBackground(String... String) {
-            try {
+           /* try {
                 URL url = new URL(FETCH_URL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
@@ -121,6 +173,8 @@ public class BarGraphActivity2 extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            return null; */
+            Log.d("yoyoyo", "yoyoyo");
             return null;
         }
 
@@ -128,60 +182,79 @@ public class BarGraphActivity2 extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            pDialog.dismiss();
+            //     pDialog.dismiss();
+            StringBuffer sb = new StringBuffer();
+
+            BufferedReader br = null;
             try {
-                JSONArray result = new JSONArray(s);
-                JSONObject jsonObject = null;
-                for (int i = 0; i < result.length(); i++) {
-                    jsonObject = result.getJSONObject(i);
-                    amount = jsonObject.getString(TAG_AMOUNT);
-                    desc = jsonObject.getString(TAG_DESC);
-                    type = jsonObject.getString(TAG_TYPE);
-                    category = jsonObject.getString(TAG_CATEGORY);
-                    date = jsonObject.getString(TAG_DATE);
-                    //System.out.println(date);
-                    //write it in the db in a different format like Wednesday, July 12, 2016 12:00 PM
-                    SimpleDateFormat readFormat = new SimpleDateFormat("EEEE, MMMM dd, yyyy hh:mm a");
-                    //SimpleDateFormat writeFormat = new SimpleDateFormat("MMMM dd, yyyy");
-
-                    //check it date string for null or empty string or else it will give Unparseable date: "" (at offset 0) error
-                    if (!date.equalsIgnoreCase("")) {
-                        try {
-                            dt = readFormat.parse(date);  //parse the date string in the read format
-                            amt = Double.valueOf(amount.replace(",", ""));
-                            //Float.valueOf(String.valueOf(dt.getTime()))
-
-                            entries.add(new BarEntry(i, Float.valueOf(String.valueOf(amt))));
-
-                        }
-                        catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-
-                    } else {
-
-                    }
+                br = new BufferedReader(new InputStreamReader(getAssets().open("expenses.json")));
+                String temp;
+                while ((temp = br.readLine()) != null) {
+                    sb.append(temp);
                 }
-
-                dataset = new BarDataSet(entries, "Transaction");
-                dataset.setColor(32);
-                dataset.setValueTextColor(12);
-                barData = new BarData(dataset);
-                newBarChart.setData(barData);
-                newBarChart.invalidate();
-
+                br.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            catch (JSONException e) {
+            try {
+                JSONArray result = new JSONArray(sb.toString());
+                JSONObject jsonObject = null;
+                try {
+                    for (int i = 0; i < result.length(); i++) {
+                        jsonObject = result.getJSONObject(i);
+                        amount = jsonObject.getString(TAG_AMOUNT);
+                        desc = jsonObject.getString(TAG_DESC);
+                        type = jsonObject.getString(TAG_TYPE);
+                        category = jsonObject.getString(TAG_CATEGORY);
+                        date = jsonObject.getString(TAG_DATE);
+                        //System.out.println(date);
+                        //write it in the db in a different format like Wednesday, July 12, 2016 12:00 PM
+                        SimpleDateFormat readFormat = new SimpleDateFormat("EEEE, MMMM dd, yyyy hh:mm a");
+                        //SimpleDateFormat writeFormat = new SimpleDateFormat("MMMM dd, yyyy");
+
+                        //check it date string for null or empty string or else it will give Unparseable date: "" (at offset 0) error
+                        if (!date.equalsIgnoreCase("")) {
+                            try {
+                                dt = readFormat.parse(date);  //parse the date string in the read format
+                                amt = Double.valueOf(amount.replace(",", ""));
+                                //Float.valueOf(String.valueOf(dt.getTime()))
+
+                                entries.add(new BarEntry(i, Float.valueOf(String.valueOf(amt))));
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                        } else {
+
+                        }
+                    }
+
+                    dataset = new BarDataSet(entries, "Transaction");
+                    dataset.setColor(GREEN);
+                    dataset.setValueTextColor(BLUE);
+                    barData = new BarData(dataset);
+                    newBarChart.setData(barData);
+                    ////////X axis
+                    XAxis xAxis = newBarChart.getXAxis();
+                    xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+                    xAxis.setTextColor(RED);
+                    newBarChart.invalidate();
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
         }
     }
-
-
-
 }
+
+
+
+
 
 
 
